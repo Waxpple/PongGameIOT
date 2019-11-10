@@ -40,25 +40,24 @@ void draw() {
     bar_x = arduino.analogRead(input);
     fill(255,0,0);
     text("Calibrate your sensor!",200,20);
-    text("First, Darker value!",200,40);
+    //text("First, Darker value!",200,40);
     if(max<bar_x){
     max = bar_x;
     }
-    text("Second, HIGH value!",200,60);
+    //text("Second, HIGH value!",200,60);
     if(min>bar_x){
     min = bar_x;
     }
     if(abs(max-min)!=0){
     scale=1024/abs(max-min);
     }
-    text("OKAY!",200,80);
-    text(max,70,270);
-    text(min,70,290);
-    rect(50,30,50,50);
-    if(mouseX>50 & mouseX<100 & mouseY>30&mouseY<50){
-      start_flag = false;
-    }
-    
+    //text("OKAY!",200,80);
+    text("Max:"+max,70,270);
+    text("Min:"+min,70,290);
+    fill(255,0,0);
+    rect(440,500,128,40);
+    fill(255,255,255);
+    text("click here to start",440,510);
 }else{
   //bar_x = int((arduino.analogRead(input)-min)*scale);
   for(int c=0;c<10;c++){
@@ -105,7 +104,7 @@ if(score_flag==1){
   }
 }
 fill(117, 168, 50);
-rect(0,100,1024,300);
+rect(0,100,1024,600);
 a1 = articles.getJSONObject(abs(fps/30000)%10);
  String s1 = a1.getString("title");
  String s2 = a1.getString("description");
@@ -115,19 +114,21 @@ a1 = articles.getJSONObject(abs(fps/30000)%10);
  //text(s1,0,200);
  for(int i =0;i<((s1.length())/45)+1;i++){
  fill(0,0,255);
+ //title
  if(45*(i+1)>s1.length()){
   text(s1.substring(45*i,s1.length()),10,200+i*45);
  }else{
  text(s1.substring(45*i,45*(i+1)),10,200+i*45);
  }
  }
+ //content
  textSize(30); 
  for(int i =0;i<(s2.length())/65+1;i++){
  fill(0,0,255);
  if(65*(i+1)>s2.length()){
-  text(s2.substring(65*i,s2.length()),10,300+i*35);
+  text(s2.substring(65*i,s2.length()),10,340+i*35);
  }else{
- text(s2.substring(65*i,65*(i+1)),10,300+i*35);
+ text(s2.substring(65*i,65*(i+1)),10,340+i*35);
  }
  }
  //String s3 = a1.getString("content");
@@ -143,4 +144,10 @@ a1 = articles.getJSONObject(abs(fps/30000)%10);
   fill(153, 227, 25);
   rect(bar_x-73,750,155,15,155);
 }
+}
+
+void mousePressed() {
+  if (mouseX >440 & mouseX<544 & mouseY>500 & mouseY<540 & start_flag) {
+    start_flag=false;
+  }
 }
